@@ -52,7 +52,15 @@ class Prompt {
                 ],
             }, 
         ])
-
+        .then(({getEngineer, getIntern}) => {
+            if (getEngineer) {
+                this.addEngineer
+            } else if (getIntern) {
+                this.addIntern
+            } else {
+                this.writeHtml
+            }
+        });
     }; 
 
     addEngineer() {
@@ -80,8 +88,10 @@ class Prompt {
                 message: "What is the Engineer GitHub?"
             }
         ])
-        .then //Add to engineer to employee array 
-    }
+        .then (({backToEmployee}) => {
+            this.addEmployee(backToEmployee); 
+        });
+    };
 
     addIntern() { 
         inquirer
@@ -108,20 +118,14 @@ class Prompt {
                 message: "Which school does the Intern go to?"
             }
         ])
-        .then //Add to Intern to employee array 
-    }
-    
-    
-    
-    // Write HTML 
-    writeHtml() { 
+        .then (({backToEmployee}) => {
+            this.addEmployee(backToEmployee); 
+        });
+    }; 
+     // Write HTML 
+    writeHtml() {
         
     }
-
-    
-    
-    
-    
-}; 
+    }; 
 
 module.exports = Prompt;  
