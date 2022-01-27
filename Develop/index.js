@@ -33,8 +33,9 @@ class Prompt {
                 message: "What is the Team Manager Email?"
             }
         ])
-        .then  
-        
+        .then(({addAnotherEmployee}) => {
+            this.addEmployee(addAnotherEmployee); 
+        });
     };
     // Employee prompt
 
@@ -47,17 +48,74 @@ class Prompt {
                 message: "Choose the type of Employee",
                 choices: [
                     {name: "Engineer"},
-                    {name: "Intern" }, 
+                    {name: "Intern" },
                 ],
             }, 
-
-
         ])
+
     }; 
+
+    addEngineer() {
+        inquirer
+        .prompt ([
+            {
+                type: "input",
+                name: "engineerName", 
+                message: "What is the Engineer's name?", 
+            },
+            {
+                type: "input", 
+                name: "engineerId",
+                message: "What is the Engineer Id?"
+            },
+            {
+                type: "input", 
+                name: "engineerEmail",
+                message: "What is the Engineer Email?"
+                
+            }, 
+            {
+                type: "input", 
+                name: "engineerGitHub",
+                message: "What is the Engineer GitHub?"
+            }
+        ])
+        .then //Add to engineer to employee array 
+    }
+
+    addIntern() { 
+        inquirer
+        .prompt ([
+            {
+                type: "input",
+                name: "internName", 
+                message: "What is the Intern's name?", 
+            },
+            {
+                type: "input", 
+                name: "internId",
+                message: "What is the Intern Id?"
+            },
+            {
+                type: "input", 
+                name: "internEmail",
+                message: "What is the Intern Email?"
+                
+            }, 
+            {
+                type: "input", 
+                name: "internSchool",
+                message: "Which school does the Intern go to?"
+            }
+        ])
+        .then //Add to Intern to employee array 
+    }
+    
+    
+    
     // Write HTML 
     writeHtml() { 
         
-
     }
 
     
