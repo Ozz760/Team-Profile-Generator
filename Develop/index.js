@@ -1,3 +1,3 @@
-const Prompt = require('./dist/template');
+const Prompt = require('./lib/template');
 
-new Prompt().buildRoster();
+new Prompt().buildTeam();

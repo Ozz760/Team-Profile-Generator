@@ -5,10 +5,10 @@ const managerTemp = require('../src/ManagerTemp');
 const engineerTemp = require('../src/EngineerTemp');
 const internTemp = require('../src/InternTemp');
 
-const Employee = require("./lib/Employee");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-const Manager = require("./lib/Manager")
+const Employee = require("./Employee");
+const Engineer = require("./Engineer");
+const Intern = require("./Intern");
+const Manager = require("./Manager")
 
 
 class Prompt {
@@ -143,7 +143,7 @@ class Prompt {
 
   // Write HTML
   writeHtml() {
-    const team = template(this.manager, this.engineer, this.intern);
+    const team = managerTemp(this.manager, this.engineer, this.intern);
         fs.writeFile('index.html', team, (err) =>
             err ? console.error(err) : console.log('Successfully Generated HTML!')
         )};
