@@ -7,7 +7,7 @@ https://watch.screencastify.com/v/6kqaSSWcYY6pSmbTpn05
 
 ---
 ## Installation 
-In order to use this application properly you will have to install inquirer to run all of the prompts properly. User and install Inquirer b going to their terminal and typing in "npm i inquirer". 
+In order to use this application properly you will have to install inquirer to run all of the prompts properly. User and install Inquirer by going to their terminal and typing in "npm i inquirer". 
 
 --- 
 ## Technology 
