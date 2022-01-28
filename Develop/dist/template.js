@@ -1,14 +1,27 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+
+const managerTemp = require('../src/ManagerTemp');
+const engineerTemp = require('../src/EngineerTemp');
+const internTemp = require('../src/InternTemp');
+
 const Employee = require("./lib/Employee");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const Manager = require("./lib/Manager");
-const choices = require("inquirer/lib/objects/choices");
-const employees = []; 
-console.log(employees); 
+const Manager = require("./lib/Manager")
+
 
 class Prompt {
+  constructor() {
+    this.manager = [];
+    this.engineer = []; 
+    this.intern = []; 
+  }
+
+  buildTeam() {
+    this.beginManager();
+  }
+  
   // Manager prompt
   beginManager() {
     inquirer
@@ -34,14 +47,14 @@ class Prompt {
           message: "What is the Team Manager Office Number?",
         },
       ])
-      .then((answers) => {
-        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNo);
-        employees.push(manager)
+      .then(({managerName, managerId, managerEmail, managerOfficeNo}) => {
+        const manager = new Manager(managerName, managerId, managerEmail, managerOfficeNo);
+        this.manager.push(manager)
         this.addEmployee();
     });
 };
-  // Employee prompt
-
+  
+// Employee prompt
   addEmployee() {
     inquirer
       .prompt([
@@ -52,10 +65,10 @@ class Prompt {
           choices: ["Engineer", "Intern", "No"],
         },
       ])
-      .then(answers => {
-        if (answers.employeeType === 'Engineer') {
+      .then(({employeeType}) => {
+        if (employeeType === 'Engineer') {
             this.addEngineer();
-        } else if (answers.employeeType === 'Intern') {
+        } else if (employeeType === 'Intern') {
             this.addIntern();
         } else {
            this.writeHtml(); 
@@ -86,23 +99,13 @@ class Prompt {
           name: "engineerGitHub",
           message: "What is the Engineer GitHub?",
         },
-        {
-          type: "list", 
-          name: "addOther", 
-          message: "Add another employee", 
-          choices: ["Yes", "No"]
-        },
+        
       ])
-      .then(answers => {
-        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerSchool);
-        employees.push(engineer);
-        console.log(answers);
-        if (answers === 'yes') {
-            this.addEmployee();
-        } else {
-            this.writeHtml(); 
-            return;
-        }
+      .then(({engineerName, engineerId, engineerEmail, engineerGithub}) => {
+        const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
+        this.engineer.push(engineer);
+        this.addEmployee();
+        
     })
 };
 
@@ -129,31 +132,21 @@ class Prompt {
           name: "internSchool",
           message: "Which school does the Intern go to?",
         },
-        {
-          type: "list", 
-          name: "addOther", 
-          message: "Add another employee", 
-          choices: ["Yes", "No"]
-        },
       ])
-      .then(answers => {
-        const engineer = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
-        employees.push(engineer);
-        console.log(answers);
-        if (answers === 'yes') {
-            this.addEmployee();
-        } else {
-            this.writeHtml(); 
-            return;
-        }
+      .then(({internName, internId, internEmail, internSchool}) => {
+        const intern = new Intern(internName, internId, internEmail, internSchool);
+        this.intern.push(intern);
+        this.addEmployee();
+        
     })
 };
 
   // Write HTML
   writeHtml() {
-    fs.writeFile('index.html', (err) => 
-    err ? console.error(err) : console.log('Successful created index.html!')
-    );
-}}; 
+    const team = template(this.manager, this.engineer, this.intern);
+        fs.writeFile('index.html', team, (err) =>
+            err ? console.error(err) : console.log('Successfully Generated HTML!')
+        )};
+};
 
 module.exports = Prompt;
